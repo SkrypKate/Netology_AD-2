@@ -1,6 +1,4 @@
-Создаем таблицу films с колонками title, film_id, country, box_office, release_date
-
-CREATE TABLE
+CREATE TABLE -- Создаем таблицу films с колонками title, film_id, country, box_office, release_date
 films (
     title VARCHAR (500),
     film_id serial PRIMARY KEY,
@@ -9,9 +7,7 @@ films (
     release_date TIMESTAMP
 );
 
-Добавляем в нее данные
-
-INSERT INTO films VALUES 
+INSERT INTO films VALUES -- Добавляем в нее данные
 (123, 'ololo@ya.ru', '2003-2-1'::timestamp)
 ('Bohemian Rhapsody',	568289,	'Great Britain',	817138799,	'2018-10-23')
 (X-Men,	886,	USA,	296250053,	'2000-07-12')
@@ -19,17 +15,13 @@ INSERT INTO films VALUES
 ('The Lord of the Rings: The Return of the King',	3498,	USA,	1119110941,	'2003-12-01')
 ('Back to the Future',	476,	USA,	381109762,	'1985-07-03');
 
-Создаем таблицу persons с колонками person_id, fio
-
-CREATE TABLE
+CREATE TABLE -- Создаем таблицу persons с колонками person_id, fio
 persons (
     person_id serial PRIMARY KEY,
     fio VARCHAR (355)
 );
 
-Добавляем в нее данные
-
-INSERT INTO persons VALUES 
+INSERT INTO persons VALUES -- Добавляем в нее данные
 (8210,	'Bryan Singer')
 (1142238,	'Lucy Boynton')
 (8213,	'Hugh Jackman')
@@ -38,18 +30,14 @@ INSERT INTO persons VALUES
 (77429, 'Lea Thompson')
 (3514,	'Christopher Lloyd');
 
-Создаем таблицу persons2content с колонками person_id, film_id, person_type
-
-CREATE TABLE
+CREATE TABLE -- Создаем таблицу persons2content с колонками person_id, film_id, person_type
 persons2content (
     person_id serial PRIMARY KEY,
     film_id serial PRIMARY KEY,
     person_type VARCHAR (355)
 );
 
-Добавляем в нее данные
-
-INSERT INTO persons2content VALUES 
+INSERT INTO persons2content VALUES -- Добавляем в нее данные
 (8210,	568289,	director)
 (1142238,	568289,	actor)
 (8213,	886,	actor)
