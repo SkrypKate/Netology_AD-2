@@ -10,7 +10,7 @@ films (
 INSERT INTO films -- Добавляем в нее данные
 VALUES 
 ('Bohemian Rhapsody',	568289,	'Great Britain',	817138799,	'2018-10-23'),
-(X-Men,	886,	USA,	296250053,	'2000-07-12'),
+('X-Men',	886,	USA,	296250053,	'2000-07-12'),
 ('The Lion King',	2360,	USA,	987483777,	'1994-05-07'),
 ('The Lord of the Rings: The Return of the King',	3498,	USA,	1119110941,	'2003-12-01'),
 ('Back to the Future',	476,	USA,	381109762,	'1985-07-03');
