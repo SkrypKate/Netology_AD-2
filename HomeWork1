@@ -15,7 +15,9 @@ VALUES
 ('The Lord of the Rings: The Return of the King',	3498,	'USA',	1119110941,	'2003-12-01'),
 ('Back to the Future',	476,	'USA',	381109762,	'1985-07-03');
 
-SELECT * FROM films; -- 
+SELECT * FROM films; -- Смотрим на результат
+
+
 
 CREATE TABLE -- Создаем таблицу persons с колонками person_id, fio
 persons (
@@ -33,6 +35,9 @@ VALUES
 (77429, 'Lea Thompson'),
 (3514,	'Christopher Lloyd');
 
+SELECT * FROM persons; -- Смотрим на результат
+
+
 CREATE TABLE -- Создаем таблицу persons2content с колонками person_id, film_id, person_type
 persons2content (
     person_id serial NOT NULL,
@@ -49,3 +54,5 @@ VALUES
 (32383,	3498,	'director'),
 (77429,	476,	'actor'),
 (3514,	476,	'actor');
+
+SELECT * FROM persons2content; -- Смотрим на результат
