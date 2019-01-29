@@ -1,7 +1,7 @@
 CREATE TABLE -- Создаем таблицу films с колонками title, film_id, country, box_office, release_date
 films (
     title VARCHAR (500),
-    film_id serial PRIMARY KEY UNIQUE NOT NULL,
+    film_id serial PRIMARY KEY NOT NULL,
     country VARCHAR (355),
     box_office serial,
     release_date TIMESTAMP
@@ -21,7 +21,7 @@ SELECT * FROM films; -- Смотрим на результат
 
 CREATE TABLE -- Создаем таблицу persons с колонками person_id, fio
 persons (
-    person_id serial PRIMARY KEY UNIQUE NOT NULL,
+    person_id serial PRIMARY KEY NOT NULL,
     fio VARCHAR (355)
 );
 
