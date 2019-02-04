@@ -54,14 +54,24 @@ LIMIT 10;
 -- 4.2 Common Table Expressions: посчитать средний рейтинг по пользователям, 
 -- у которых более 10 оценок. Нужно подсчитать средний рейтинг по все пользователям, 
 -- которые попали под условие - то есть в ответе должно быть одно число.
-WITH 123
+WITH users10
 AS (
-    SELECT *
-    FROM 
+    SELECT 
+        userid,
+        COUNT(rating) AS activity
+    FROM public.ratings
+    GROUP BY userid
+    HAVING activity >10 
 )
     SELECT
-    userId,
-    COUNT(rating) as activity
+    AVG()
+    
+    
+    
+    
+    
+    
+    AVG(rating) as avg_rating_user
 FROM public.ratings
 GROUP BY userId
 ORDER BY activity DESC
