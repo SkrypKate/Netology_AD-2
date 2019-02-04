@@ -65,6 +65,7 @@ AS (
 )
     SELECT
     AVG(activity) as avg_all_users
+    FROM users10
 ;
     
     
