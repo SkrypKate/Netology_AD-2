@@ -33,8 +33,8 @@ userId,
 AVG(rating) as avg_rating
 FROM public.ratings
 GROUP BY userId
-ORDER BY avg_rating
 HAVING AVG(rating) < 3.5
+ORDER BY avg_rating
 LIMIT 10;
 
 -- 4. Иерархические запросы
