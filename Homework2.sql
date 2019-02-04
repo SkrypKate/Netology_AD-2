@@ -29,8 +29,8 @@ WHERE ratings.rating IS NULL;
 
 -- 3.2 Вывести top-10 пользователей, у который средний рейтинг выше 3.5
 SELECT
-userId,
-AVG(rating) as avg_rating
+    userId,
+    AVG(rating) as avg_rating
 FROM public.ratings
 GROUP BY userId
 HAVING AVG(rating) < 3.5
@@ -40,7 +40,7 @@ LIMIT 10;
 -- 4. Иерархические запросы
 -- 4.1 Подзапросы: достать любые 10 imbdId из links у которых средний рейтинг больше 3.5.
 SELECT
-imbdId
+    imdbId
 FROM links
 JOIN ratings
     ON links.movieid=ratings.movieid
@@ -51,4 +51,19 @@ WHERE (
     ) > 3.5
 LIMIT 10;
 
--- 4.2 Common Table Expressions: посчитать средний рейтинг по пользователям, у которых более 10 оценок. Нужно подсчитать средний рейтинг по все пользователям, которые попали под условие - то есть в ответе должно быть одно число.
+-- 4.2 Common Table Expressions: посчитать средний рейтинг по пользователям, 
+-- у которых более 10 оценок. Нужно подсчитать средний рейтинг по все пользователям, 
+-- которые попали под условие - то есть в ответе должно быть одно число.
+WITH 123
+AS (
+    SELECT *
+    FROM 
+)
+    SELECT
+    userId,
+    COUNT(rating) as activity
+FROM public.ratings
+GROUP BY userId
+ORDER BY activity DESC
+LIMIT 5;
+    
