@@ -34,7 +34,7 @@ SELECT
 FROM public.ratings
 GROUP BY userId
 HAVING AVG(rating) < 3.5
-ORDER BY avg_rating
+ORDER BY avg_rating DESC
 LIMIT 10;
 
 -- 4. Иерархические запросы
