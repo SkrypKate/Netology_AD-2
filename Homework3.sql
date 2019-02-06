@@ -26,7 +26,11 @@ netology@NetologyAD-2:~$  ls $NETOLOGY_DATA/raw_data | grep keywords
  netology@NetologyAD-2:~$ sudo su -l postgres
 
  -- vipolnyem komandu sozdat table cherez PostgreSQL
- postgres@NetologyAD-2:~$ psql -U postgres -c "CREATE TABLE IF NOT EXISTS keywords (id SERIAL, tags VARCHAR(355));"
+ postgres@NetologyAD-2:~$ psql -U postgres -c "CREATE TABLE IF NOT EXISTS keywords_3 (id SERIAL, tags TEXT);"
 
  -- копирования данных из файла в созданную вами таблицу
-  postgres@NetologyAD-2:~$ psql -U postgres -c "copy keywords FROM '/home/netology
+  postgres@NetologyAD-2:~$ psql -U postgres -c "copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' delimiter ',' CSV HEADER"
+
+--Проверьте, что в таблице есть записи
+
+SELECT  COUNT(*) FROM keywords_3;
