@@ -12,7 +12,6 @@ FROM (
     FROM ratings
     WHERE userId <>1 LIMIT 1000
 ) as sample
-GROUP BY userid
 LIMIT 30;
 
 -- ETL
@@ -44,6 +43,8 @@ WITH top_rated as (
  ORDER BY movieid ASC, avg_rating DESC
  LIMIT 150
 )
+ SELECT *
+ FROM top_rated
  JOIN keywords
  ON top_rated.movieid=keywords.movieid
  LIMIT 20;
