@@ -37,7 +37,12 @@ WITH top_rated as (
  SELECT
  movieid, 
  AVG(rating) OVER (PARTITION BY userId) as avg_rating
- FROM public.ratings
+ FROM (
+    SELECT DISTINCT
+        userId, movieId, rating
+    FROM ratings
+    WHERE userId <>1 LIMIT 1000
+) as sample
  GROUP BY movieid 
  HAVING COUNT(userid) > 50 
  ORDER BY movieid ASC, avg_rating DESC
