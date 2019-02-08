@@ -43,9 +43,28 @@ WITH top_rated as (
  ORDER BY avg_rating DESC,
           movieid ASC
 )
- SELECT *
+ SELECT top_rated.movieid, avg_rating, tags
  FROM top_rated
  JOIN keywords
  ON top_rated.movieid=keywords.movieid
  LIMIT 150;
+ 
+ -- Запрос 3
+ WITH top_rated as (
+ SELECT
+ movieId, 
+ AVG(rating) as avg_rating
+    FROM ratings
+  GROUP BY movieId 
+ HAVING COUNT(userid) > 50 
+ ORDER BY avg_rating DESC,
+          movieid ASC
+)
+ SELECT top_rated.movieid, avg_rating, tags
+ INTO top_rated_tags
+ FROM top_rated
+ JOIN keywords
+ ON top_rated.movieid=keywords.movieid
+ LIMIT 150;
+
  
