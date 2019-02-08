@@ -36,14 +36,14 @@ SELECT COUNT(*) FROM keywords;
 WITH top_rated as (
  SELECT
  movieId, 
- AVG(rating) OVER (PARTITION BY movieId) as avg_rating
- FROM ratings
- GROUP BY movieId 
+ AVG(rating) as avg_rating
+    FROM ratings
+  GROUP BY movieId 
  HAVING COUNT(userid) > 50 
  ORDER BY avg_rating DESC,
           movieid ASC
 )
- SELECT movieId, avg_rating
+ SELECT *
  FROM top_rated
  JOIN keywords
  ON top_rated.movieid=keywords.movieid
