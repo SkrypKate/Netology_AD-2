@@ -16,7 +16,7 @@ LIMIT 30;
 
 -- ETL
 -- Extract
--- Проверьте, что в директории data присутствует файл с ключевыми словами по фильмам
+-- Проверяем, что в директории data присутствует файл с ключевыми словами по фильмам (здесь и далее перед запросом указываю имя, из-под которого делаю запрос)
 netology@NetologyAD-2:~$  ls $NETOLOGY_DATA/raw_data | grep keywords
 
 -- Заходим под пользователем postgres
@@ -28,6 +28,9 @@ postgres@NetologyAD-2:~$ psql -U postgres -c "CREATE TABLE IF NOT EXISTS keyword
 -- Копируем данные из файла в созданную таблицу
 postgres@NetologyAD-2:~$ psql -U postgres -c "copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' delimiter ',' CSV HEADER"
 
+ -- Заходим в PostgreSQL
+ postgres@NetologyAD-2:~$ psql
+ 
 -- Проверяем, что в таблице есть записи
 SELECT COUNT(*) FROM keywords;
 
@@ -49,6 +52,7 @@ WITH top_rated as (
  ON top_rated.movieid=keywords.movieid
  LIMIT 150;
  
+ -- Load
  -- Запрос 3
  WITH top_rated as (
  SELECT
@@ -67,4 +71,6 @@ WITH top_rated as (
  ON top_rated.movieid=keywords.movieid
  LIMIT 150;
 
+ -- Выгрузим таблицу в файл
+ 
  
