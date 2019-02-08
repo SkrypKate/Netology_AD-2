@@ -35,28 +35,17 @@ SELECT COUNT(*) FROM keywords;
 -- Запрос 1,2
 WITH top_rated as (
  SELECT
- movieid, 
- AVG(rating) OVER (PARTITION BY userId) as avg_rating
- FROM (
-    SELECT DISTINCT
-        userId, movieId, rating
-    FROM ratings
-    WHERE userId <>1 LIMIT 1000
-) as sample
- GROUP BY movieid 
+ movieId, 
+ AVG(rating) OVER (PARTITION BY movieId) as avg_rating
+ FROM ratings
+ GROUP BY movieId 
  HAVING COUNT(userid) > 50 
- ORDER BY movieid ASC, avg_rating DESC
- LIMIT 150
+ ORDER BY avg_rating DESC,
+          movieid ASC
 )
- SELECT *
+ SELECT movieId, avg_rating
  FROM top_rated
  JOIN keywords
  ON top_rated.movieid=keywords.movieid
- LIMIT 20;
- 
- 
- 
- SELECT
- movieid,
- avg(rating) OVER (PARTITION BY movieid) as avg_rating
+ LIMIT 150;
  
