@@ -56,5 +56,7 @@ WITH top_rated as (
  
  
  
- 
+ SELECT
+ movieid,
+ avg(rating) OVER (PARTITION BY movieid) as avg_rating
  
