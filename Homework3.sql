@@ -72,5 +72,5 @@ WITH top_rated as (
  LIMIT 150;
 
  -- Выгрузим таблицу в файл
- \copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMITER AS \t;
+ \copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMITER AS '\t';
  
