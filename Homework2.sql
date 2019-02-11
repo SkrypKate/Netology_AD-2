@@ -23,10 +23,10 @@ LIMIT 10;
 -- 3. Агрегация данных: базовые статистики
 -- 3.1 Посчитать число фильмов без оценок
 SELECT
-COUNT (DISTINCT movieid) as movieNull
-FROM ratings
-JOIN links
-ON movieid.ratings=movieid.links
+COUNT (DISTINCT links.movieid) as movieNull
+FROM links
+LEFT JOIN ratings
+ON links.movieid=ratings.movieid
 WHERE ratings.rating IS NULL;
 
 -- 3.2 Вывести top-10 пользователей, у который средний рейтинг выше 3.5
