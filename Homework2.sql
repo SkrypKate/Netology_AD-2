@@ -24,7 +24,9 @@ LIMIT 10;
 -- 3.1 Посчитать число фильмов без оценок
 SELECT
 COUNT (DISTINCT movieid) as movieNull
-FROM public.ratings
+FROM ratings
+JOIN links
+ON movieid.ratings=movieid.links
 WHERE ratings.rating IS NULL;
 
 -- 3.2 Вывести top-10 пользователей, у который средний рейтинг выше 3.5
