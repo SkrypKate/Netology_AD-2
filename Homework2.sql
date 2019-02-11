@@ -48,6 +48,7 @@ JOIN ratings
     ON links.movieid=ratings.movieid
 WHERE (
     SELECT
+    movieid
     AVG(rating) as avg_rating
     FROM ratings
     ) > 3.5
