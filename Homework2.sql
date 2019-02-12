@@ -45,51 +45,31 @@ LIMIT 10;
 SELECT imdbId
 FROM links
 WHERE movieId IN
-(SELECT movieId
- AVG(rating) as avg_rating
+(SELECT DISTINCT movieId
 FROM ratings
  GROUP BY movieid
 HAVING avg(rating) > 3.5
 )
 LIMIT 10;
 
+-- 4.2 Common Table Expressions: посчитать средний рейтинг по пользователям, у которых более 10 оценок. 
+-- Нужно подсчитать средний рейтинг по все пользователям, которые попали под условие - то есть в ответе должно быть одно число.
 
-
-
-
-
-
-
-
-
-
-
-
-
-SELECT
-    imdbId
-FROM links
-JOIN ratings
-    ON links.movieid=ratings.movieid
-WHERE (
-    SELECT
-    movieid
-    AVG(rating) as avg_rating
-    FROM ratings
-    ) > 3.5
-LIMIT 10;
-
--- 4.2 Common Table Expressions: посчитать средний рейтинг по пользователям, у которых более 10 оценок. Нужно подсчитать средний рейтинг по все пользователям, которые попали под условие - то есть в ответе должно быть одно число.
 WITH users10  -- выбрали всех пользователей с более 10 оценками
 AS (    
     SELECT 
-        userid,
-        COUNT(rating) AS activity
+        userid
     FROM public.ratings
     GROUP BY userid
     HAVING COUNT(rating) >10 
 )
     SELECT
-        AVG(activity) as avg_all_users
-    FROM users10
-;
+    avg(rating) as avg_rating
+    FROM ratings
+    GROUP BY userid
+    HAVING userid in (
+        SELECT
+        userid
+    FROM users10)
+    LIMIT 10;
+
