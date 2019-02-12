@@ -59,17 +59,14 @@ WITH users10  -- выбрали всех пользователей с боле�
 AS (    
     SELECT 
         userid
-    FROM public.ratings
+    FROM ratings
     GROUP BY userid
     HAVING COUNT(rating) >10 
 )
-    SELECT
-    avg(rating) as avg_rating
+SELECT 
+AVG(rating) as avg_all
+FROM (SELECT users10.userid,rating
     FROM ratings
-    GROUP BY userid
-    HAVING userid in (
-        SELECT
-        userid
-    FROM users10)
-    LIMIT 10;
-
+    INNER JOIN users10
+    ON ratings.userid=users10.userid) as sel_rat
+       LIMIT 10;
