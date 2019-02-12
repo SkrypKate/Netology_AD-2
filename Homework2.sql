@@ -41,6 +41,31 @@ LIMIT 10;
 
 -- 4. Иерархические запросы
 -- 4.1 Подзапросы: достать любые 10 imbdId из links у которых средний рейтинг больше 3.5.
+
+SELECT imdbId
+FROM links
+WHERE movieId IN
+(SELECT movieId
+ AVG(rating) as avg_rating
+FROM ratings
+ GROUP BY movieid
+HAVING avg(rating) > 3.5
+)
+LIMIT 10;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 SELECT
     imdbId
 FROM links
