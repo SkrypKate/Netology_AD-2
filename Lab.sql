@@ -50,30 +50,30 @@ INSERT INTO employee values
 WITH uniqe_chief_id as 
   (
   SELECT DISTINCT
-    department_id,		
-    chief_doc_id
+	department_id,		
+ 	chief_doc_id
   FROM employee
   )
 SELECT 
 	department.name,
-  COUNT(chief_doc_id) as count_chief_id
+	COUNT(chief_doc_id) as count_chief_id
 FROM uniqe_chief_id
 LEFT JOIN department
-ON uniqe_chief_id.department_id=department.id
+	ON uniqe_chief_id.department_id=department.id
 GROUP BY department.name;
 
 -- Вывести список департаментов, в которых работают 3 и более сотрудников (id и название департамента, количество сотрудников)
 
 SELECT 
 	department.id,
-  department.name,
+	department.name,
 	COUNT(employee.id) AS count_doc
 FROM employee
 LEFT JOIN department
 	ON employee.department_id=department.id
 GROUP BY 
 	department.name,
-  department.id
+	department.id
 HAVING COUNT(employee.id)>=3
 ORDER BY count_doc DESC;
 
@@ -81,9 +81,9 @@ ORDER BY count_doc DESC;
 
 WITH max_public AS (
 SELECT 
-    department_id,
-    department.name,
-    SUM(num_public) AS sum_pub
+	department_id,
+	department.name,
+	SUM(num_public) AS sum_pub
 FROM employee
 LEFT JOIN department
 ON employee.department_id=department.id
@@ -98,34 +98,26 @@ GROUP BY
 
 -- Вывести список сотрудников с минимальным количеством публикаций в своем департаменте (id и название департамента, имя сотрудника, количество публикаций)
 
-SELECT department_id,
-    department.name,
-    min(num_public) AS min_pub
+SELECT  department_id,
+	department.name,
+	min(num_public) AS min_pub
 FROM employee
 LEFT JOIN department
 	ON employee.department_id=department.id
 GROUP BY 	
-    department_id,
-    department.name
-;
+	department_id,
+	department.name;
 
 -- Вывести список департаментов и среднее количество публикаций для тех департаментов, в которых работает более одного главного врача (id и название департамента, среднее количество публикаций)
 
-WITH avg_public AS (
-SELECT 
-	department_id,
-  department.name,
-  AVG(num_public) AS avg_public
+SELECT 	department_id,
+	department.name,
+	AVG(num_public) as avg_pub
 FROM employee
-LEFT JOIN department
-	ON employee.department_id=department.id
+JOIN department
+	ON department.id=employee.department_id
 GROUP BY 
-	employee.department_id,
+	department_id, 
 	department.name
-)
-SELECT 
-	department_id,
-  name,
-  AVG(avg_public) OVER (partition by department_id) as avg_pub
-FROM avg_public
-ORDER BY avg_public DESC;
+HAVING COUNT(DISTINCT chief_doc_id) > 1
+ORDER BY department_id ASC;
