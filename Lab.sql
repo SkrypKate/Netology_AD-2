@@ -81,22 +81,20 @@ ORDER BY count_doc DESC;
 
 WITH max_public AS (
 SELECT 
-	department_id,
-  department.name,
-  SUM(num_public) AS sum_public
+    department_id,
+    department.name,
+    SUM(num_public) AS sum_pub
 FROM employee
 LEFT JOIN department
-	ON employee.department_id=department.id
+ON employee.department_id=department.id
 GROUP BY 
 	employee.department_id,
 	department.name
 )
-SELECT 
-	department_id,
-  name,
-  MAX(sum_public) OVER (partition by department_id) as max_pub
-FROM max_public
-ORDER BY sum_public DESC;
+ SELECT * 
+ FROM max_public
+ WHERE sum_pub = (SELECT MAX(sum_pub) FROM max_public);
+
 
 -- Вывести список сотрудников с минимальным количеством публикаций в своем департаменте (id и название департамента, имя сотрудника, количество публикаций)
 
