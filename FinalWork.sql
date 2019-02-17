@@ -3,33 +3,47 @@ CREATE DATABASE courses;
 
 -- Создаем таблицы в базе
 CREATE TABLE lecturers (
-id_lec 
-full_name
-experience
-purview
-cost_per_hour
+id_lec INTEGER PRIMARY KEY,
+full_name VARCHAR(150),
+experience INTEGER,          
+purview VARCHAR(150),
+cost_per_hour INTEGER
 );
 
 CREATE TABLE students (
-id_stud
-full_name
-tel
-email
-purview
+id_stud INTEGER PRIMARY KEY,
+full_name VARCHAR(150),
+tel INTEGER,
+email VARCHAR(150),
+purview VARCHAR(150)
 );
 
-CREATE TABLE timetable (
-date
-id_class
-subject
-id_lec
-duration
+CREATE TABLE timetable (  -- выбрать primary key
+date TIMESTAMP, 
+id_class INTEGER,
+subject VARCHAR(500),
+id_lec INTEGER,
+duration INTEGER
 );
 
 CREATE TABLE classes (
-date
-id_class
-id_lec
-id_stud
-cost
+date TIMESTAMP,
+id_class INTEGER PRIMARY KEY,
+id_lec INTEGER,
+id_stud INTEGER,
+cost INTEGER
 );
+
+INSERT INTO lecturers VALUES
+();
+
+INSERT INTO students VALUES
+();
+
+INSERT INTO timetable VALUES
+();
+
+INSERT INTO classes VALUES
+();
+
+
