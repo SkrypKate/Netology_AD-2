@@ -274,33 +274,31 @@ ON classes.id_class=timetable.id_class
 GROUP BY purview
 ORDER BY count(id_stud) DESC;           
                 
--- 9. Найти самого опытного преподавателя в каждой предметной области. Вывести имя предметной области, ФИО преподавателя и стаж.
+-- 9. Найти самого опытного преподавателя в каждой предметной области. Вывести название предметной области, ФИО преподавателя и стаж.
+WITH max_experience as (
 SELECT
       purview,
 	full_name,
       max(experience) as max_exp
 FROM lecturers
 GROUP BY purview,
-	full_name;
-           
-                
-                
+	full_name
+)	
+SELECT * 
+ FROM max_experience
+ WHERE ;	
+          
 
 -- 10. Вывести Топ-5 студентов, которые посетили больше всего мероприятий (ID и ФИО студента, количество мероприятий).
-select
-      id_stud,
-      full_name,
-count(id_class) as count_class
-from students
-left join classes
-on students.id_stud=classes.id_stud
-group by 
-       id_stud,
-       full_name;
-
-
-
-
-
-
-
+SELECT
+      students.id_stud,
+      students.full_name,
+	count(id_class) as count_class
+FROM students
+LEFT JOIN classes
+ON students.id_stud=classes.id_stud
+GROUP BY
+         students.id_stud,
+      students.full_name
+ORDER BY count(id_class) DESC
+LIMIT 5;
