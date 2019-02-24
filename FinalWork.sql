@@ -18,9 +18,9 @@ email VARCHAR(150),
 purview VARCHAR(150)
 );
 
-CREATE TABLE timetable (  -- выбрать primary key
+CREATE TABLE timetable (
 date TIMESTAMP, 
-id_class INTEGER,
+id_class INTEGER PRIMARY KEY,
 subject VARCHAR(500),
 purview VARCHAR(150),
 id_lec INTEGER,
@@ -29,7 +29,7 @@ duration INTEGER
 
 CREATE TABLE classes (
 date TIMESTAMP,
-id_class INTEGER PRIMARY KEY,
+id_class INTEGER,
 id_stud INTEGER,
 cost INTEGER
 );
