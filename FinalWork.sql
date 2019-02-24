@@ -214,7 +214,20 @@ lecturers.full_name
 ORDER BY full_name ASC
 ;
 
--- 4. Узнать, сколько денег мы получим от студентов за каждое занятие. Вывести дату, ID занятия, название мероприятия, сумма.
+-- 4. Узнать, сколько денег мы получим от студентов за каждое занятие. Вывести дату, ID занятия, название мероприятия, сумма. Вывести в порядке убывания суммы.
+SELECT
+      timetable.date,
+      timetable.id_class,
+      timetable.subject,
+      SUM(cost) as sum_monney
+FROM timetable
+LEFT JOIN classes
+ON classes.id_class=timetable.id_class
+GROUP BY timetable.date,
+timetable.id_class,
+timetable.subject
+HAVING SUM(cost) > 0
+ORDER BY SUM(cost) DESC;
 
 -- 5. Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
 
