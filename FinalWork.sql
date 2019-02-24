@@ -200,19 +200,18 @@ WHERE date >= '2019/03/01'
 AND date <='2019/03/31'
 ORDER BY date ASC;
 
-
 -- 3. Вычислить нагрузку каждого преподавателя в часах в текущем месяце, выстроить по алфавиту. Вывести ID преподавателя, имя проподавателя, количество часов.
 SELECT
-lecturers.id_lec,
-lecturers.full_name,
-SUM(duration) as num_hours
+      lecturers.id_lec,
+      lecturers.full_name,
+      SUM(duration) as num_hours
 FROM lecturers
 LEFT JOIN timetable
 ON lecturers.id_lec=timetable.id_lec
-GROUP BY lecturers.id_lec,
-lecturers.full_name
-ORDER BY full_name ASC
-;
+GROUP BY 
+      lecturers.id_lec,
+      lecturers.full_name
+ORDER BY full_name ASC;
 
 -- 4. Узнать, сколько денег мы получим от студентов за каждое занятие. Вывести дату, ID занятия, название мероприятия, сумма. Вывести в порядке убывания суммы.
 SELECT
@@ -223,18 +222,41 @@ SELECT
 FROM timetable
 LEFT JOIN classes
 ON classes.id_class=timetable.id_class
-GROUP BY timetable.date,
-timetable.id_class,
-timetable.subject
+GROUP BY 
+      timetable.date,
+      timetable.id_class,
+      timetable.subject
 HAVING SUM(cost) > 0
 ORDER BY SUM(cost) DESC;
 
--- 5. Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
+-- 5.1 Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
+SELECT
+      timetable.date,
+      timetable.id_class,
+      lecturers.full_name,
+      sum(lecturers.cost_per_hour*timetable.duration) as abc
+FROM timetable
+LEFT JOIN lecturers
+ON timetable.id_lec=lecturers.id_lec
+GROUP BY 
+      timetable.date,
+      timetable.id_class,
+      lecturers.full_name
+ORDER BY timetable.date ASC;
 
+-- 5.2 Кому из преподавателей заплатили больше всего за проведенные занятия. Вывести ТОП-5 (ФИО преподавателя, сумму). 
+SELECT
+      lecturers.full_name,
+      sum(lecturers.cost_per_hour*timetable.duration) as abc
+FROM timetable
+LEFT JOIN lecturers
+ON timetable.id_lec=lecturers.id_lec
+GROUP BY 
+      lecturers.full_name
+ORDER BY sum(lecturers.cost_per_hour*timetable.duration) DESC
+LIMIT 5;
 
-
-
-
+-- 6. Какая предметная область самая высокооплачиваемая (бухучет, кадры или юриспруденция)? Вывести название предметной области и среднюю стоимость часа по каждой области.
 
 
 
