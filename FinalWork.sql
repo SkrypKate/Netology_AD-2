@@ -19,7 +19,7 @@ purview VARCHAR(150)
 );
 
 CREATE TABLE timetable (
-date TIMESTAMP, 
+date DATE, 
 id_class INTEGER PRIMARY KEY,
 subject VARCHAR(500),
 purview VARCHAR(150),
@@ -28,7 +28,7 @@ duration INTEGER
 );
 
 CREATE TABLE classes (
-date TIMESTAMP,
+date DATE,
 id_class INTEGER,
 id_stud INTEGER,
 cost INTEGER
@@ -174,14 +174,60 @@ INSERT INTO classes VALUES
 ('2019/03/11','1248','64','3500'),
 ('2019/03/11','1248','65','3500');
 
+SELECT * FROM lecturers;
+SELECT * FROM students;
+SELECT * FROM timetable;
+SELECT * FROM classes;
+
 -- Запросы
--- 1. Вычислить нагрузку каждого преподавателя в часах в текущем месяце
 
--- 2. Узнать количество студентов, записавшихся на конкретное мероприятие/в конкретный день
+-- 1. Узнать количество студентов, записавшихся на мероприятие 1248 "Все о недвижимости: аренда, регистрация прав, налоговые вычеты и многие другие вопросы"
+SELECT
+COUNT(id_stud) as stud_count
+FROM classes
+WHERE id_class=1248;
 
--- 3. Узнать, сколько денег мы получим от студентов за определенное занятие/или в месяц
+-- 2. Вывести все мероприятий марта (дата, номер, название, лектор)
+SELECT 
+timetable.date,
+timetable.id_class,
+subject,
+lecturers.full_name
+FROM timetable
+LEFT JOIN lecturers
+ON timetable.id_lec=lecturers.id_lec
+WHERE date >= '2019/03/01'
+AND date <='2019/03/31'
+ORDER BY date ASC;
 
--- 4. Сколько нужно заплатить каждому преподавателю за занятия в определенном месяце
+
+-- 3. Вычислить нагрузку каждого преподавателя в часах в текущем месяце, выстроить по алфавиту. Вывести ID преподавателя, имя проподавателя, количество часов.
+SELECT
+lecturers.id_lec,
+lecturers.full_name,
+SUM(duration) as num_hours
+FROM lecturers
+LEFT JOIN timetable
+ON lecturers.id_lec=timetable.id_lec
+GROUP BY lecturers.id_lec,
+lecturers.full_name
+ORDER BY full_name ASC
+;
+
+-- 4. Узнать, сколько денег мы получим от студентов за каждое занятие. Вывести дату, ID занятия, название мероприятия, сумма.
+
+-- 5. Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
+
+
+
+
+
+
+
+
+
+
+
 
 -- 5. Вывести Топ-5 студентов, которые посетили больше всего мероприятий
 
