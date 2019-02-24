@@ -189,10 +189,10 @@ WHERE id_class=1248;
 
 -- 2. Вывести все мероприятий марта (дата, номер, название, лектор)
 SELECT 
-timetable.date,
-timetable.id_class,
-subject,
-lecturers.full_name
+      timetable.date,
+      timetable.id_class,
+      subject,
+      lecturers.full_name
 FROM timetable
 LEFT JOIN lecturers
 ON timetable.id_lec=lecturers.id_lec
@@ -229,7 +229,7 @@ GROUP BY
 HAVING SUM(cost) > 0
 ORDER BY SUM(cost) DESC;
 
--- 5.1 Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
+-- 5. Сколько нужно заплатить каждому преподавателю за занятие. Вывести дату, ID занятия, ФИО преподавателя, сумму.
 SELECT
       timetable.date,
       timetable.id_class,
@@ -244,10 +244,10 @@ GROUP BY
       lecturers.full_name
 ORDER BY timetable.date ASC;
 
--- 5.2 Кому из преподавателей заплатили больше всего за проведенные занятия. Вывести ТОП-5 (ФИО преподавателя, сумму). 
+-- 6. Кому из преподавателей заплатили больше всего за проведенные занятия. Вывести ТОП-5 (ФИО преподавателя, сумму). 
 SELECT
       lecturers.full_name,
-      sum(lecturers.cost_per_hour*timetable.duration) as abc
+      sum(lecturers.cost_per_hour*timetable.duration) as cost_lec
 FROM timetable
 LEFT JOIN lecturers
 ON timetable.id_lec=lecturers.id_lec
@@ -256,25 +256,47 @@ GROUP BY
 ORDER BY sum(lecturers.cost_per_hour*timetable.duration) DESC
 LIMIT 5;
 
--- 6. Какая предметная область самая высокооплачиваемая (бухучет, кадры или юриспруденция)? Вывести название предметной области и среднюю стоимость часа по каждой области.
+-- 7. Какая предметная область самая высокооплачиваемая (бухучет, кадры или юриспруденция)? Вывести название предметной области и среднюю стоимость часа по каждой области.
+SELECT
+      purview,
+      round(avg(cost_per_hour)) as avg_cost
+FROM lecturers
+GROUP BY purview
+ORDER BY avg(cost_per_hour) DESC;
 
+-- 8. Какая предметная область наиболее интересна студентам/мероприятия какой предметной области посетило наибольшее количество студентов. Вывести предметную область и количество студентов
+SELECT
+     purview,
+     count(id_stud) as count_stud
+FROM classes
+LEFT JOIN timetable
+ON classes.id_class=timetable.id_class
+GROUP BY purview
+ORDER BY count(id_stud) DESC;           
+                
+-- 9. Найти самого опытного преподавателя в каждой предметной области. Вывести имя предметной области, ФИО преподавателя и стаж.
+SELECT
+      purview,
+	full_name,
+      max(experience) as max_exp
+FROM lecturers
+GROUP BY purview,
+	full_name;
+           
+                
+                
 
-
-
-
-
-
--- 5. Вывести Топ-5 студентов, которые посетили больше всего мероприятий
-
--- 6. Какая предметная область наиболее интересна студентам/мероприятия какой предметной области посетило наибольшее количество студентов
-
--- 7. Узнать в какие даты проходят мероприятия одного лектора
-
--- 8. Узнать расписание определенного студента
-
--- 9. 
-
-
+-- 10. Вывести Топ-5 студентов, которые посетили больше всего мероприятий (ID и ФИО студента, количество мероприятий).
+select
+      id_stud,
+      full_name,
+count(id_class) as count_class
+from students
+left join classes
+on students.id_stud=classes.id_stud
+group by 
+       id_stud,
+       full_name;
 
 
 
